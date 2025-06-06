@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vedic Wellness - Magazine Style</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', serif;
+            line-height: 1.6;
+            color: #2c2c2c;
+            background: #fefefe;
+        }
+
+        /* Magazine-style grid layout */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header as magazine masthead */
+        header {
+            background: #1a3d29;
+            color: white;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" font-size="100" opacity="0.05" fill="white">🕉</text></svg>') repeat;
+            background-size: 100px 100px;
+        }
+
+        .masthead {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo {
+            text-align: center;
+            grid-column: 2;
+        }
+
+        .logo h1 {
+            font-size: 3.5rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            margin-bottom: 0.5rem;
+        }
+
+        .logo p {
+            font-size: 1rem;
+            letter-spacing: 2px;
+            opacity: 0.8;
+        }
+
+        .date-location {
+            text-align: right;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Navigation bar */
+        .nav-bar {
+            background: #2d5a27;
+            padding: 1rem 0;
+            border-top: 3px solid #68d391;
+            border-bottom: 3px solid #68d391;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+            border-radius: 3px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero section as magazine feature */
+        .hero-magazine {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            padding: 3rem 0;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .hero-main {
+            position: relative;
+            background: linear-gradient(135deg, #1a3d29 0%, #2d5a27 100%);
+            color: white;
+            padding: 4rem;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .hero-main::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle fill="rgba(255,255,255,0.1)" cx="50" cy="50" r="40"/></svg>');
+            background-size: contain;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-main h2 {
+            font-size: 3rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .hero-main .lead {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .read-more {
+            display: inline-block;
+            background: white;
+            color: #1a3d29;
+            padding: 0.8rem 2rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .read-more:hover {
+            background: #f0f0f0;
+            transform: translateY(-2px);
+        }
+
+        .hero-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .sidebar-item {
+            background: white;
+            padding: 1.5rem;
+            border-left: 4px solid #68d391;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .sidebar-item h3 {
+            color: #1a3d29;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .sidebar-item p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Magazine-style content grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            padding: 3rem 0;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        .article-section {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-top: 5px solid #2d5a27;
+        }
+
+        .article-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .article-header h2 {
+            font-size: 2.5rem;
+            color: #1a3d29;
+            margin-bottom: 0.5rem;
+            font-weight: 300;
+        }
+
+        .article-header .subtitle {
+            font-style: italic;
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* Services as magazine columns */
+        .services-columns {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .service-column {
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-left: 4px solid #68d391;
+        }
+
+        .service-column h3 {
+            color: #1a3d29;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .service-column .icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* Sidebar content */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .sidebar-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-left: 5px solid #68d391;
+        }
+
+        .sidebar-section h3 {
+            color: #1a3d29;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 0.5rem;
+        }
+
+        .quick-facts {
+            list-style: none;
+        }
+
+        .quick-facts li {
+            padding: 0.5rem 0;
+            border-bottom: 1px dotted #ddd;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quick-facts li:last-child {
+            border-bottom: none;
+        }
+
+        /* Contact form as magazine subscription */
+        .subscription-form {
+            background: #1a3d29;
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+        }
+
+        .subscription-form h3 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #68d391;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: #68d391;
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #5bb881;
+        }
+
+        /* Full-width sections */
+        .full-width-section {
+            background: #f8f9fa;
+            padding: 4rem 0;
+            margin: 3rem 0;
+            border-top: 3px solid #2d5a27;
+            border-bottom: 3px solid #2d5a27;
+        }
+
+        .treatments-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .treatment-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .treatment-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .treatment-card h4 {
+            color: #1a3d29;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        /* Footer as magazine end */
+        footer {
+            background: #1a3d29;
+            color: white;
+            padding: 3rem 0 2rem;
+            text-align: center;
+            border-top: 5px solid #68d391;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            color: #68d391;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
+            .hero-magazine {
+                grid-template-columns: 1fr;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .services-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .masthead {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .date-location {
+                text-align: center;
+            }
+
+            .logo h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: #2d5a27;
+                padding: 1rem;
+                gap: 0;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 1rem;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .nav-container {
+                position: relative;
+            }
+
+            .hero-main {
+                padding: 2rem;
+            }
+
+            .hero-main h2 {
+                font-size: 2rem;
+            }
+
+            .article-header h2 {
+                font-size: 2rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: left;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-main h2 {
+                font-size: 1.8rem;
+            }
+
+            .article-section,
+            .sidebar-section {
+                padding: 1.5rem;
+            }
+
+            .treatments-showcase {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="masthead">
+                <div class="date-location">
+                    <p>EST. 2020 | WELLNESS CENTER</p>
+                </div>
+                <div class="logo">
+                    <h1>VEDIC WELLNESS</h1>
+                    <p>AYURVEDIC HEALING JOURNAL</p>
+                </div>
+                <div class="date-location">
+                    <p>FRIDAY, JUNE 06, 2025</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav class="nav-bar">
+        <div class="container">
+            <div class="nav-container">
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home">HOME</a></li>
+                    <li><a href="#about">ABOUT</a></li>
+                    <li><a href="#services">SERVICES</a></li>
+                    <li><a href="#treatments">TREATMENTS</a></li>
+                    <li><a href="#contact">CONTACT</a></li>
+                </ul>
+                <button class="mobile-toggle" id="mobileToggle">☰</button>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home">
+        <div class="container">
+            <div class="hero-magazine">
+                <div class="hero-main">
+                    <div class="hero-content">
+                        <h2>Ancient Wisdom, Modern Healing</h2>
+                        <p class="lead">Experience the transformative power of authentic Ayurvedic treatments for complete wellness</p>
+                        <a href="#contact" class="read-more">BOOK CONSULTATION</a>
+                    </div>
+                </div>
+                <div class="hero-sidebar">
+                    <div class="sidebar-item">
+                        <h3>FEATURED TODAY</h3>
+                        <p>Discover Panchakarma - The ultimate detox experience</p>
+                    </div>
+                    <div class="sidebar-item">
+                        <h3>WELLNESS TIP</h3>
+                        <p>Start your day with warm water and lemon for better digestion</p>
+                    </div>
+                    <div class="sidebar-item">
+                        <h3>THIS WEEK</h3>
+                        <p>Special consultation rates for new patients</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="content-grid">
+            <main class="main-content">
+                <article id="about" class="article-section">
+                    <div class="article-header">
+                        <h2>About Ayurveda</h2>
+                        <p class="subtitle">The Science of Life and Longevity</p>
+                    </div>
+                    <p><strong>Ayurveda, the "science of life,"</strong> is a 5,000-year-old system of natural healing that originated in India. This holistic approach to health focuses on achieving balance between mind, body, and spirit through personalized treatments, dietary guidelines, and lifestyle practices.</p>
+                    
+                    <p>Our experienced practitioners combine traditional Ayurvedic wisdom with modern understanding to provide comprehensive care that addresses the root causes of health issues, not just symptoms. We believe in treating each individual as unique, considering their constitution (Prakriti), current imbalances (Vikriti), and environmental factors.</p>
+
+                    <p>Through careful assessment and personalized treatment plans, we help restore your natural state of balance and vitality. Our approach encompasses herbal medicines, therapeutic treatments, dietary counseling, yoga, meditation, and lifestyle modifications tailored specifically for you.</p>
+                </article>
+
+                <article id="services" class="article-section">
+                    <div class="article-header">
+                        <h2>Our Services</h2>
+                        <p class="subtitle">Comprehensive Ayurvedic Care</p>
+                    </div>
+                    
+                    <div class="services-columns">
+                        <div class="service-column">
+                            <span class="icon">🌿</span>
+                            <h3>Consultation & Assessment</h3>
+                            <p>Detailed evaluation of your constitution, current health status, and personalized treatment planning through traditional diagnostic methods including pulse diagnosis and comprehensive health history.</p>
+                        </div>
+                        
+                        <div class="service-column">
+                            <span class="icon">💆‍♀️</span>
+                            <h3>Panchakarma Detox</h3>
+                            <p>Complete purification and rejuvenation therapy involving five specialized treatments to eliminate toxins, restore balance, and enhance natural healing capacity.</p>
+                        </div>
+                        
+                        <div class="service-column">
+                            <span class="icon">🌺</span>
+                            <h3>Therapeutic Massage</h3>
+                            <p>Specialized Ayurvedic massage techniques using warm herbal oils to improve circulation, reduce stress, eliminate toxins, and promote deep relaxation and healing.</p>
+                        </div>
+                        
+                        <div class="service-column">
+                            <span class="icon">🍃</span>
+                            <h3>Herbal Medicine</h3>
+                            <p>Customized herbal formulations prepared according to traditional methods to address specific health concerns and support overall wellness and vitality.</p>
+                        </div>
+                    </div>
+
+                    <p>Each service is tailored to your individual needs and constitution. Our practitioners work closely with you to develop a comprehensive treatment plan that supports your journey to optimal health and well-being.</p>
+                </article>
+            </main>
+
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <h3>Quick Facts</h3>
+                    <ul class="quick-facts">
+                        <li><span>🕐</span> Established in 2020</li>
+                        <li><span>👥</span> 500+ Happy Clients</li>
+                        <li><span>🏆</span> Certified Practitioners</li>
+                        <li><span>🌿</span> 100% Natural Treatments</li>
+                        <li><span>📍</span> Located in Hyderabad</li>
+                        <li><span>⭐</span> 5-Star Rated Center</li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Health Tips</h3>
+                    <div style="text-align: left;">
+                        <p><strong>Morning Routine:</strong> Start with warm water and fresh ginger to kindle digestive fire.</p>
+                        <p><strong>Eating Habits:</strong> Eat your largest meal at midday when digestive fire is strongest.</p>
+                        <p><strong>Sleep:</strong> Aim for 7-8 hours of quality sleep, ideally before 10 PM.</p>
+                        <p><strong>Stress Management:</strong> Practice daily meditation or pranayama breathing exercises.</p>
+                    </div>
+                </div>
+
+                <div class="subscription-form" id="contact">
+                    <h3>Book Consultation</h3>
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="service">Service Interest</label>
+                            <select id="service" name="service">
+                                <option value="">Select a service</option>
+                                <option value="consultation">Initial Consultation</option>
+                                <option value="panchakarma">Panchakarma Detox</option>
+                                <option value="massage">Therapeutic Massage</option>
+                                <option value="herbal">Herbal Medicine</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message (Optional)</label>
+                            <textarea id="message" name="message" rows="4" placeholder="Tell us about your health concerns or questions..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">BOOK APPOINTMENT</button>
+                    </form>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <section class="full-width-section" id="treatments">
+        <div class="container">
+            <div class="article-header">
+                <h2>Featured Treatments</h2>
+                <p class="subtitle">Specialized Therapies for Complete Wellness</p>
+            </div>
+            
+            <div class="treatments-showcase">
+                <div class="treatment-card">
+                    <h4>Shirodhara</h4>
+                    <p>Continuous stream of warm herbal oil poured over the forehead to calm the nervous system, reduce stress, and promote deep relaxation and mental clarity.</p>
+                </div>
+                
+                <div class="treatment-card">
+                    <h4>Abhyanga</h4>
+                    <p>Full-body massage with warm herbal oils to improve circulation, eliminate toxins, nourish the skin, and promote overall health and vitality.</p>
+                </div>
+                
+                <div class="treatment-card">
+                    <h4>Swedana</h4>
+                    <p>Herbal steam therapy to open pores, eliminate impurities, improve circulation, and prepare the body for deeper detoxification treatments.</p>
+                </div>
+                
+                <div class="treatment-card">
+                    <h4>Nasya</h4>
+                    <p>Nasal administration of medicated oils or powders to clear sinuses, improve breathing, enhance mental clarity, and treat head and neck disorders.</p>
+                </div>
+                
+                <div class="treatment-card">
+                    <h4>Pizhichil</h4>
+                    <p>Continuous pouring of warm medicated oil over the body combined with gentle massage to treat neurological conditions and promote rejuvenation.</p>
+                </div>
+                
+                <div class="treatment-card">
+                    <h4>Kizhi</h4>
+                    <p>Therapeutic massage using warm herbal poultices to reduce inflammation, improve joint mobility, and treat musculoskeletal conditions naturally.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>Contact Information</h4>
+                    <p>📍 123 Wellness Street<br>Hyderabad, Telangana 500001</p>
+                    <p>📞 +91 98765 43210</p>
+                    <p>✉️ info@vedicwellness.com</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Opening Hours</h4>
+                    <p>Monday - Saturday<br>9:00 AM - 7:00 PM</p>
+                    <p>Sunday<br>10:00 AM - 5:00 PM</p>
+                    <p>Consultations by appointment</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <p><a href="#">Facebook</a></p>
+                    <p><a href="#">Instagram</a></p>
+                    <p><a href="#">YouTube</a></p>
+                    <p><a href="#">LinkedIn</a></p>
+                </div>
+            </div>
+            
+            <div style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 1rem; margin-top: 2rem;">
+                <p>&copy; 2025 Vedic Wellness. All rights reserved. | Ayurvedic treatments are complementary to conventional medicine.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile navigation toggle
+        document.getElementById('mobileToggle').addEventListener('click', function() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+                // Close mobile menu if open
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+
+        // Form submission handler
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your interest! We will contact you within 24 hours to schedule your consultation.');
+            this.reset();
+        });
+
+        // Add fade-in animation for treatment cards
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Initialize treatment cards with fade-in effect
+        document.querySelectorAll('.treatment-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
